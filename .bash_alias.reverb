@@ -1,0 +1,41 @@
+alias ll='ls -la'
+alias reverb='cd ~/reverbnation'
+alias tlog='tail -f log/development.log'
+
+alias sql='mysql -u dev -p'
+
+alias herbie='ssh ntaubitz@herbie.reverbnation.com'
+
+alias diff='git diff'
+alias st='git status'
+alias stash='git stash'
+alias pop='git stash pop'
+alias pull='git pull'
+alias push='git push'
+alias logme='git log --author=ntaubitz'
+alias list='stash list'
+alias add='git add -A'
+
+alias bi='bundle install'
+alias master='git checkout master'
+alias staging='git checkout staging'
+alias production='git checkout production'
+
+alias rqq='QUEUE=med_priority_1hr rake resque:work'
+alias rqs='rake resque:scheduler'
+
+# Nginx
+alias proxy='reload_nginx'
+
+function reload_nginx {
+	sudo nginx -s stop
+	sudo nginx
+}
+
+function update {
+	pull
+	bi
+	rake db:migrate
+	rake tmp:clear
+	rake css:compile
+}
