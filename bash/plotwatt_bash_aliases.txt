@@ -1,0 +1,75 @@
+alias master='git checkout master'
+alias pull='git pull'
+alias push='git push'
+alias alf='cd ~/plotwatt/alfredo'
+alias esp='cd ~/plotwatt/espresso'
+alias bar='cd ~/plotwatt/barista'
+alias calllog='cat log/development.log | grep ":call_log:"'
+alias infolog='cat log/development.log | grep ":info:"'
+alias errorlog='cat log/development.log | grep ":error:"'
+alias dbm='cd ~/plotwatt/alfredo/vendor/plugins/pw-models/db/migrate'
+alias stash='git stash'
+alias pop='git stash apply'
+alias br='git branch'
+alias st='git status'
+
+alias msql='mysql plotwatt_site'
+alias freshdata='SKIP_FILTERED=1 ~/plotwatt/load_db.sh yes'
+
+alias bi='bundle install'
+
+alias restart='sudo /etc/init.d/apache2 restart'
+alias rc='rails c'
+
+alias clearlog="echo '' > log/development.log"
+alias running='~/ottomayshun/cli/listec2.py --include-non-prod'
+
+alias loaddb='SKIP_FILTERED=1 ~/plotwatt/load_db.sh yes'
+
+pullall()
+{
+        git pull
+        git submodule foreach "git checkout master; git pull"
+}
+
+startpdf()
+{   
+    cd ~/plotwatt/libplotwatt/plotwatt/model/locations/spotlight/app
+    python app.py 8303
+}
+
+newinstance()
+{   
+    ~/ottomayshun/worker/start_instance.py --role=alfredostage --instance-type=c3.xlarge
+}
+
+setenv()
+{
+    echo "setting environment: $1"
+    bin/rails db:environment:set RAILS_ENV=$1
+}
+
+make_test_db()
+{
+    [ -e ~/test_db.sql ] && rm ~/test_db.sql
+    echo "dumping plotwatt_site"
+    mysqldump plotwatt_site > ~/test_db.sql
+    mysqladmin drop plotwatt_test
+    echo "creating plotwatt_test"
+    mysqladmin create plotwatt_test
+    echo "importing plotwatt_test"
+    mysql -f plotwatt_test < ~/test_db.sql
+    echo "cleaning up"
+    rm ~/test_db.sql
+}
+
+alias gensrv='python ~/plotwatt/genability/server.py'
+
+alias al='cat ~/.bash_aliases'
+alias eal='vim ~/.bash_aliases'
+alias sal='source ~/.bash_aliases'
+
+alias pssh="~/ottomayshun/cli/pssh.py"
+alias tssh="~/ottomayshun/cli/pssh.py --aws-profile=pw_test"
+
+alias scr='screen -r'
