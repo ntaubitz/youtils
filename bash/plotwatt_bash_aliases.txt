@@ -7,6 +7,8 @@ alias bar='cd ~/plotwatt/barista'
 alias calllog='cat log/development.log | grep ":call_log:"'
 alias infolog='cat log/development.log | grep ":info:"'
 alias errorlog='cat log/development.log | grep ":error:"'
+alias taillog='tail -f log/development.log'
+alias natedogg='cat log/development.log | grep "nate_dogg"'
 alias dbm='cd ~/plotwatt/alfredo/vendor/plugins/pw-models/db/migrate'
 alias stash='git stash'
 alias pop='git stash apply'
@@ -14,7 +16,7 @@ alias br='git branch'
 alias st='git status'
 
 alias msql='mysql plotwatt_site'
-alias freshdata='SKIP_FILTERED=1 ~/plotwatt/load_db.sh yes'
+alias fresh_data='SKIP_FILTERED=1 ~/plotwatt/load_db.sh yes'
 
 alias bi='bundle install'
 
@@ -43,14 +45,14 @@ newinstance()
     ~/ottomayshun/worker/start_instance.py --role=alfredostage --instance-type=c3.xlarge
 }
 
-setenv()
-{
+set_env()
+{   
     echo "setting environment: $1"
     bin/rails db:environment:set RAILS_ENV=$1
 }
 
 make_test_db()
-{
+{   
     [ -e ~/test_db.sql ] && rm ~/test_db.sql
     echo "dumping plotwatt_site"
     mysqldump plotwatt_site > ~/test_db.sql
